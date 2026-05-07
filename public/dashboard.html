@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard — Test RSUS</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="main-page">
+
+  <header class="app-header">
+    <h1>Test RSUS</h1>
+    <div class="header-actions">
+      <button id="btn-export-pdf" class="btn btn-secondary" onclick="exportPdf()">
+        Cetak / Ekspor PDF
+      </button>
+      <button id="btn-logout" class="btn btn-danger" onclick="logout()">
+        Logout
+      </button>
+    </div>
+  </header>
+
+  <main class="main-content">
+
+    <!-- Form Tambah / Edit Karyawan -->
+    <section class="form-section" aria-labelledby="form-title">
+      <h2 id="form-title">Tambah Karyawan</h2>
+
+      <div id="form-error" class="error-message" role="alert" aria-live="polite" hidden></div>
+      <div id="form-success" class="success-message" role="status" aria-live="polite" hidden></div>
+
+      <form id="employee-form" novalidate>
+        <input type="hidden" id="edit-id" value="" />
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="input-nama">Nama <span aria-hidden="true">*</span></label>
+            <input type="text" id="input-nama" name="Nama" placeholder="Nama lengkap" required />
+          </div>
+
+          <div class="form-group">
+            <label for="input-tgl-lahir">Tanggal Lahir <span aria-hidden="true">*</span></label>
+            <input type="date" id="input-tgl-lahir" name="Tgl_Lahir" required />
+          </div>
+
+          <div class="form-group">
+            <label for="input-gaji">Gaji <span aria-hidden="true">*</span></label>
+            <input type="number" id="input-gaji" name="Gaji" placeholder="Contoh: 5000000" min="1" required />
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <button type="submit" id="btn-submit" class="btn btn-primary">Tambah Karyawan</button>
+          <button type="button" id="btn-cancel" class="btn btn-secondary" onclick="cancelEdit()" hidden>
+            Batal
+          </button>
+        </div>
+      </form>
+    </section>
+
+    <!-- Tabel Daftar Karyawan -->
+    <section class="table-section" aria-labelledby="table-title">
+      <h2 id="table-title">Daftar Karyawan</h2>
+
+      <div id="table-error" class="error-message" role="alert" aria-live="polite" hidden></div>
+
+      <div class="table-wrapper">
+        <table id="employee-table" aria-label="Daftar Karyawan">
+          <thead>
+            <tr>
+              <th scope="col">Id</th>
+              <th scope="col">Nama</th>
+              <th scope="col">Tgl_Lahir</th>
+              <th scope="col">Gaji</th>
+              <th scope="col">Aksi</th>
+            </tr>
+          </thead>
+          <tbody id="employee-tbody">
+            <tr>
+              <td colspan="5" class="loading-row">Memuat data...</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+  </main>
+
+  <script src="app.js"></script>
+  <script>
+    if (!isAuthenticated()) {
+      window.location.href = 'login.html';
+    } else {
+      document.addEventListener('DOMContentLoaded', function () {
+        loadEmployees();
+      });
+    }
+  </script>
+</body>
+</html>
